@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const ProfileContainer = styled.div`
@@ -8,32 +8,23 @@ const ProfileContainer = styled.div`
 
 const Title = styled.h1`
   font-size: 2rem;
-  color: inherit; /* Adapt to current theme */
+  color: #333;
 `;
 
-const ToggleContainer = styled.div`
-    margin-top: 20px;
-`;
+const Profile: React.FC = () => {
+    const [darkMode, setDarkMode] = useState(false);
 
-interface ProfileProps {
-    darkMode: boolean;
-    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const Profile: React.FC<ProfileProps> = ({ darkMode, setDarkMode }) => {
     return (
         <ProfileContainer>
             <Title>User Profile</Title>
-            <ToggleContainer>
-                <label>
-                    <input
-                        type="checkbox"
-                        checked={darkMode}
-                        onChange={() => setDarkMode(!darkMode)}
-                    />
-                    Dark Mode
-                </label>
-            </ToggleContainer>
+            <label>
+                <input
+                    type="checkbox"
+                    checked={darkMode}
+                    onChange={() => setDarkMode(!darkMode)}
+                />
+                Dark Mode
+            </label>
         </ProfileContainer>
     );
 };
