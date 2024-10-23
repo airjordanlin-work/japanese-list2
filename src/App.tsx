@@ -10,10 +10,10 @@ interface VocabItem {
 // Vocabulary data
 const vocabData: VocabItem[] = [
   { word: '風呂キャンセル界隈', definition: 'People who do not take baths' },
-  { word: 'Ephemeral', definition: 'Lasting for a very short time.' },
-  { word: 'Ineffable', definition: 'Too great or extreme to be expressed in words.' },
-  { word: 'Serendipity', definition: 'The occurrence of events by chance in a happy or beneficial way.' },
-  { word: 'Quintessential', definition: 'Representing the most perfect or typical example of a quality or class.' }
+  { word: '草', definition: 'Grass(Japanese laugh like www so looks like grass)' },
+  { word: 'くち草 ', definition: 'LOL' },
+  { word: 'ディスる', definition: 'Diss' },
+  { word: 'バズる', definition: 'Something popular online' }
 ];
 
 // Styled Components with Hover and Animation effects
