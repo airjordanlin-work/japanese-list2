@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const PracticeContainer = styled.div`
   text-align: center;
-  margin-top: 50px;
+    margin-bottom: 80%;
 `;
 
 const Title = styled.h1`

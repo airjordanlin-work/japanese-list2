@@ -12,8 +12,8 @@ import Profile from './components/Profile';
 import Flashcards from "./components/Flashcards.tsx";
 
 const AppPage = styled.div`
-    width: 100%;
-    min-height: 140vh;
+    width: 105%;
+    min-height: 200vh;
     display: flex;
     flex-direction: column;
     align-items: center;
