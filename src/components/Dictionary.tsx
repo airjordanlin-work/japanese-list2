@@ -9,7 +9,6 @@ const DictionaryContainer = styled(Paper)`
     max-width: 800px;
     margin-bottom: 80%;
     margin-left: 30%;
-
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -66,10 +65,7 @@ const Dictionary: React.FC = () => {
         }
     };
 
-    const handleModeChange = (
-        event: React.MouseEvent<HTMLElement>,
-        newMode: 'JAtoEN' | 'ENtoJA'
-    ) => {
+    const handleModeChange = (newMode: 'JAtoEN' | 'ENtoJA') => {
         if (newMode) {
             setTranslationMode(newMode);
             setResults([]);
@@ -83,7 +79,7 @@ const Dictionary: React.FC = () => {
             <ToggleButtonGroup
                 value={translationMode}
                 exclusive
-                onChange={handleModeChange}
+                onChange={(_, newMode) => handleModeChange(newMode)}
                 aria-label="translation mode"
                 style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}
             >
@@ -119,13 +115,11 @@ const Dictionary: React.FC = () => {
                         {results.map((entry, index) => (
                             <DefinitionBox key={index}>
                                 {translationMode === 'JAtoEN' ? (
-                                    <>
-                                        <Typography variant="h6">{entry.meanings.join(', ')}</Typography>
-                                    </>
+                                    <Typography variant="h6">{entry.meanings.join(', ')}</Typography>
                                 ) : (
                                     <>
                                         <Typography variant="h6">{entry.kanji || entry.reading}</Typography>
-                                        <Romaji>{entry.romaji}</Romaji>
+                                        {entry.romaji && <Romaji>{entry.romaji}</Romaji>}
                                     </>
                                 )}
                             </DefinitionBox>

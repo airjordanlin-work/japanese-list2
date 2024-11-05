@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Box, Typography } from '@mui/material';
 
 interface ProgressTrackerProps {
-    learnedCount: number;
-    totalWords: number;
+    learnedCount?: number;
+    totalWords?: number;
 }
 
 // Styled component for the container
@@ -17,8 +17,10 @@ const ProgressContainer = styled(Box)`
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 `;
 
-// Progress Tracker Component
-const ProgressTracker: React.FC<ProgressTrackerProps> = ({ learnedCount, totalWords }) => {
+const ProgressTracker: React.FC<ProgressTrackerProps> = ({
+                                                             learnedCount = 0,
+                                                             totalWords = 100,
+                                                         }) => {
     return (
         <ProgressContainer>
             <Typography variant="h4">Your Progress</Typography>

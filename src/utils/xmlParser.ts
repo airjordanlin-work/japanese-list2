@@ -1,8 +1,11 @@
 // src/utils/xmlParser.ts
+
+// Update the VocabularyEntry interface to include romaji as an optional field
 export interface VocabularyEntry {
     kanji: string;
     reading: string;
     meanings: string[];
+    romaji?: string; // Add romaji as an optional property
 }
 
 // Cache variable to store the parsed vocabulary data
@@ -88,6 +91,6 @@ export async function searchWord(word: string): Promise<VocabularyEntry[]> {
         }
     }).map(entry => ({
         ...entry,
-        romaji: entry.reading ? convertToRomaji(entry.reading) : ""
+        romaji: entry.reading ? convertToRomaji(entry.reading) : "" // Add romaji field
     }));
 }
