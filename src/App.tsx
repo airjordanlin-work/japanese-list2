@@ -1,7 +1,7 @@
 
 import { createBrowserRouter, Routes, Route, RouterProvider } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from './components/Header';
+
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import VocabularyLists from './components/VocabularyLists';
@@ -10,6 +10,8 @@ import Games from './components/Games';
 import ProgressTracker from './components/ProgressTracker';
 import Profile from './components/Profile';
 import Flashcards from "./components/Flashcards.tsx";
+import Dictionary from "./components/Dictionary.tsx"
+import Test from "./components/Test.tsx"
 
 const AppPage = styled.div`
     width: 105%;
@@ -31,7 +33,7 @@ const Root = () => {
     return (
         <AppPage>
             <ContentWrapper>
-                <Header />
+
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Home/>} />
@@ -41,6 +43,8 @@ const Root = () => {
                     <Route path="/progress-tracker" element={<ProgressTracker />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/flashcards" element={<Flashcards />} />
+                    <Route path="/dictionary" element={<Dictionary />} />
+                    <Route path="/tests" element={<Test />} />
                 </Routes>
             </ContentWrapper>
         </AppPage>

@@ -1,22 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Box, Typography } from '@mui/material';
 
-const ProgressContainer = styled.div`
-  text-align: center;
-  margin-top: 50px;
+interface ProgressTrackerProps {
+    learnedCount: number;
+    totalWords: number;
+}
+
+// Styled component for the container
+const ProgressContainer = styled(Box)`
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #e3f2fd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 `;
 
-const Title = styled.h1`
-  font-size: 2rem;
-  color: #333;
-`;
-
-const ProgressTracker: React.FC = () => {
+// Progress Tracker Component
+const ProgressTracker: React.FC<ProgressTrackerProps> = ({ learnedCount, totalWords }) => {
     return (
         <ProgressContainer>
-            <Title>Your Progress</Title>
-            <p>Words mastered: 20</p>
-            <p>Words to master: 100</p>
+            <Typography variant="h4">Your Progress</Typography>
+            <Typography variant="body1">Words mastered: {learnedCount}</Typography>
+            <Typography variant="body1">Words to master: {totalWords - learnedCount}</Typography>
         </ProgressContainer>
     );
 };

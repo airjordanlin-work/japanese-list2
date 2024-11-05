@@ -30,7 +30,7 @@ const Practice: React.FC = () => {
         <PracticeContainer>
             <Title>Choose a Practice Activity</Title>
             <PracticeButton to="/flashcards">Flashcards</PracticeButton>
-            <PracticeButton to="/quizzes">Quizzes</PracticeButton>
+            <PracticeButton to="/tests">Test</PracticeButton>
         </PracticeContainer>
     );
 };

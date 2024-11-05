@@ -1,104 +1,75 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import ConfirmationDialog from './ConfirmationDialog'; // Import the confirmation dialog component
+import { Box, Button, Typography, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+
 // Define the shape of the vocab data using TypeScript interface
 interface VocabItem {
     word: string;
     definition: string;
 }
 
-
-const VocabContainer = styled.div`
+// Styled Components with MUI and styled-components
+const VocabContainer = styled(Box)`
     width: 80%;
     max-width: 800px;
     margin: 20px auto;
-    background-color: #fff;
+    background-color: #fafafa;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-`;
-
-const Title = styled.h1`
-  text-align: center;
-  color: #333;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 `;
 
 const VocabListStyled = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 `;
 
-const VocabItemStyled = styled.li`
-  margin: 15px 0;
-  background-color: #f4f4f4;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: transform 0.3s, background-color 0.3s;
-  
-  &:hover {
-    transform: translateY(-5px);
-    background-color: #e0e0e0;
-  }
+const VocabItemStyled = styled(Box)`
+    margin: 15px 0;
+    background-color: #e3f2fd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+
+    &:hover {
+        transform: translateY(-5px);
+        background-color: #bbdefb;
+    }
 `;
 
-const VocabWord = styled.div`
-  font-size: 1.5rem;
-  color: #000;
-  font-weight: bold;
+const VocabWord = styled(Typography)`
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1976d2;
 `;
 
-const VocabDefinition = styled.p<{ isVisible: boolean }>`
-  color: #555;
-  font-size: 1.2rem;
-  margin-top: 10px;
-  max-height: ${({ isVisible }) => (isVisible ? '200px' : '0')};
-  overflow: hidden;
-  transition: max-height 0.3s ease;
+const VocabDefinition = styled(Typography)<{ isVisible: boolean }>`
+    color: #424242;
+    font-size: 1.1rem;
+    margin-top: 10px;
+    max-height: ${({ isVisible }) => (isVisible ? '200px' : '0')};
+    overflow: hidden;
+    transition: max-height 0.3s ease;
 `;
 
-const Button = styled.button`
-  padding: 10px 20px;
-  margin: 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #45a049;
-  }
+const InputContainer = styled(Box)`
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
 `;
 
 const RemoveButton = styled(Button)`
-  background-color: #f44336;
+    background-color: #f44336;
+    color: white;
+    margin-top: 10px;
 
-  &:hover {
-    background-color: #d32f2f;
-  }
+    &:hover {
+        background-color: #d32f2f;
+    }
 `;
-
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-`;
-
-const Input = styled.input`
-  padding: 10px;
-  margin: 5px 0;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-
-
-// Define the shape of the vocab data using TypeScript interface
 
 // Vocabulary data
 const initialVocabData: VocabItem[] = [
@@ -108,8 +79,6 @@ const initialVocabData: VocabItem[] = [
     { word: 'ディスる', definition: 'Diss' },
     { word: 'バズる', definition: 'Something popular online' }
 ];
-
-// Styled Components (as before)
 
 const VocabularyLists: React.FC = () => {
     const [vocabData, setVocabData] = useState<VocabItem[]>(initialVocabData);
@@ -138,9 +107,9 @@ const VocabularyLists: React.FC = () => {
 
     const handleRemoveVocab = (index: number) => {
         const removedItem = vocabData[index];
-        setLastDeleted(removedItem); // Store the deleted item
-        setVocabData((prev) => prev.filter((_, i) => i !== index)); // Remove the item from the list
-        setUndoVisible(true); // Show undo button
+        setLastDeleted(removedItem);
+        setVocabData((prev) => prev.filter((_, i) => i !== index));
+        setUndoVisible(true);
         setIsDialogVisible(false);
     };
 
@@ -163,41 +132,41 @@ const VocabularyLists: React.FC = () => {
 
     const handleUndo = () => {
         if (lastDeleted) {
-            setVocabData((prev) => [...prev, lastDeleted]); // Restore the deleted item
-            setLastDeleted(null); // Clear the last deleted item
-            setUndoVisible(false); // Hide the undo button
+            setVocabData((prev) => [...prev, lastDeleted]);
+            setLastDeleted(null);
+            setUndoVisible(false);
         }
     };
 
-    // Automatically hide the undo button after a few seconds
     useEffect(() => {
         if (undoVisible) {
-            const timer = setTimeout(() => {
-                setUndoVisible(false);
-            }, 5000); // Hide after 5 seconds
-            return () => clearTimeout(timer); // Clean up the timer
+            const timer = setTimeout(() => setUndoVisible(false), 5000);
+            return () => clearTimeout(timer);
         }
     }, [undoVisible]);
 
     return (
         <VocabContainer>
-            <Title>Vocabulary Lists</Title>
+            <Typography variant="h4" align="center" gutterBottom>Vocabulary Lists</Typography>
 
-            {/* Input fields for adding new vocabulary */}
             <InputContainer>
-                <Input
-                    type="text"
-                    placeholder="Enter new word"
+                <TextField
+                    label="New Word"
+                    variant="outlined"
                     value={newWord}
                     onChange={(e) => setNewWord(e.target.value)}
+                    margin="dense"
                 />
-                <Input
-                    type="text"
-                    placeholder="Enter new definition"
+                <TextField
+                    label="New Definition"
+                    variant="outlined"
                     value={newDefinition}
                     onChange={(e) => setNewDefinition(e.target.value)}
+                    margin="dense"
                 />
-                <Button onClick={handleAddVocab}>Add Vocabulary</Button>
+                <Button variant="contained" color="primary" onClick={handleAddVocab} style={{ marginTop: '10px' }}>
+                    Add Vocabulary
+                </Button>
             </InputContainer>
 
             <VocabListStyled>
@@ -207,23 +176,28 @@ const VocabularyLists: React.FC = () => {
                         <VocabDefinition isVisible={visibleDefinitions[index] || false}>
                             {item.definition}
                         </VocabDefinition>
-                        <RemoveButton onClick={() => showConfirmationDialog(index)}>Remove</RemoveButton>
+                        <RemoveButton onClick={() => showConfirmationDialog(index)} variant="contained">
+                            Remove
+                        </RemoveButton>
                     </VocabItemStyled>
                 ))}
             </VocabListStyled>
 
-            {/* Show confirmation dialog when user clicks remove */}
-            {isDialogVisible && (
-                <ConfirmationDialog
-                    message="Are you sure you want to delete this vocabulary item?"
-                    onConfirm={confirmRemoveVocab}
-                    onCancel={cancelRemoveVocab}
-                />
-            )}
+            <Dialog open={isDialogVisible} onClose={cancelRemoveVocab}>
+                <DialogTitle>Confirm Deletion</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>Are you sure you want to delete this vocabulary item?</DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={cancelRemoveVocab} color="primary">Cancel</Button>
+                    <Button onClick={confirmRemoveVocab} color="secondary">Confirm</Button>
+                </DialogActions>
+            </Dialog>
 
-            {/* Show undo option */}
             {undoVisible && (
-                <Button onClick={handleUndo}>Undo Delete</Button>
+                <Button onClick={handleUndo} variant="outlined" color="secondary" style={{ marginTop: '10px' }}>
+                    Undo Delete
+                </Button>
             )}
         </VocabContainer>
     );
