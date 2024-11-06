@@ -3,22 +3,23 @@ import styled from 'styled-components';
 import { VocabularyEntry, searchWord } from '../utils/xmlParser';
 import { Button, ToggleButton, ToggleButtonGroup, TextField, Typography, Paper, Box } from '@mui/material';
 
-// Styled components
+// Styled components with space theme
 const DictionaryContainer = styled(Paper)`
     width: 80%;
-    max-width: 800px;
-    margin-bottom: 80%;
-    margin-left: 30%;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    background-color: #f3f4f6;
+    max-width: 600px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 12px;
+    background-color: rgba(29, 32, 53, 0.9); /* Dark background for space feel */
+    box-shadow: 0px 4px 20px rgba(0, 229, 255, 0.2);
 `;
 
 const Title = styled(Typography)`
     text-align: center;
-    color: #1a237e;
+    color: #00e5ff;
     font-weight: bold;
+    font-size: 1.8rem;
+    text-shadow: 0px 0px 5px #00e5ff;
 `;
 
 const ResultContainer = styled.div`
@@ -26,31 +27,46 @@ const ResultContainer = styled.div`
 `;
 
 const ResultItem = styled(Paper)`
-    background-color: #e8eaf6;
-    padding: 15px;
-    border-radius: 8px;
+    background: linear-gradient(145deg, #23253d, #2e3150);
+    padding: 20px;
+    border-radius: 10px;
     margin-bottom: 15px;
+    color: #e0f7fa;
+    box-shadow: 0px 4px 15px rgba(0, 229, 255, 0.2);
 `;
 
 const ResultWord = styled(Typography)`
     font-size: 1.5rem;
     font-weight: bold;
-    color: #3949ab;
+    color: #00e5ff;
+    text-shadow: 0px 0px 5px #00e5ff;
 `;
 
 const DefinitionBox = styled(Box)`
-    background-color: #f1f8e9;
+    background-color: rgba(33, 48, 58, 0.8);
     padding: 10px;
     margin-top: 8px;
     border-radius: 5px;
     font-size: 1.1rem;
-    color: #1b5e20;
+    color: #81c784;
 `;
 
 const Romaji = styled(Typography)`
-    color: #78909c;
+    color: #b0bec5;
     font-size: 1rem;
     margin-top: 5px;
+`;
+
+const StyledButton = styled(Button)`
+    background-color: #ff4081;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0px 0px 5px #ff4081;
+    box-shadow: 0px 4px 10px rgba(255, 64, 129, 0.3);
+
+    &:hover {
+        background-color: #ff80ab;
+    }
 `;
 
 const Dictionary: React.FC = () => {
@@ -83,10 +99,10 @@ const Dictionary: React.FC = () => {
                 aria-label="translation mode"
                 style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}
             >
-                <ToggleButton value="JAtoEN" aria-label="Japanese to English">
+                <ToggleButton value="JAtoEN" aria-label="Japanese to English" style={{ color: '#00e5ff' }}>
                     Japanese to English
                 </ToggleButton>
-                <ToggleButton value="ENtoJA" aria-label="English to Japanese">
+                <ToggleButton value="ENtoJA" aria-label="English to Japanese" style={{ color: '#00e5ff' }}>
                     English to Japanese
                 </ToggleButton>
             </ToggleButtonGroup>
@@ -97,17 +113,27 @@ const Dictionary: React.FC = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                style={{ margin: '10px 0' }}
+                style={{
+                    margin: '10px 0',
+                    backgroundColor: '#1e1e30',
+                    color: '#e0f7fa',
+                    borderRadius: '5px',
+                }}
+                InputLabelProps={{
+                    style: { color: '#b0bec5' },
+                }}
+                InputProps={{
+                    style: { color: '#e0f7fa' },
+                }}
             />
-            <Button
+            <StyledButton
                 variant="contained"
-                color="primary"
                 fullWidth
                 onClick={handleSearch}
                 style={{ marginTop: '10px' }}
             >
                 Search
-            </Button>
+            </StyledButton>
             <ResultContainer>
                 {results.length > 0 ? (
                     <ResultItem elevation={2}>

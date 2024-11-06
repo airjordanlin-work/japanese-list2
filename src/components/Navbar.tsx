@@ -25,7 +25,17 @@ const slideOut = keyframes`
     }
 `;
 
-// Navbar container for full screen
+// Neon glow effect for navbar links
+const neonGlow = keyframes`
+    0%, 100% {
+        text-shadow: 0 0 5px #00e5ff, 0 0 10px #00e5ff, 0 0 20px #00e5ff;
+    }
+    50% {
+        text-shadow: 0 0 10px #ff4081, 0 0 20px #ff4081, 0 0 30px #ff4081;
+    }
+`;
+
+// Navbar container
 const NavbarContainer = styled.nav<{ isOpen: boolean }>`
     background-color: #1a1a1d;
     color: #fff;
@@ -46,12 +56,12 @@ const NavbarContainer = styled.nav<{ isOpen: boolean }>`
         position: fixed;
         top: 0;
         left: 0;
-        width: 75%; /* Only occupy 75% of the screen on mobile */
+        width: 75%;
         height: 100%;
         transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(-100%)')};
         animation: ${({ isOpen }) => (isOpen ? slideIn : slideOut)} 0.5s forwards;
         box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
-        background-color: #1a1a1d;
+        background-color: rgba(26, 26, 29, 0.9);
     }
 `;
 
@@ -67,11 +77,11 @@ const NavList = styled.ul`
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
-        padding: 50px 20px; /* Adds padding for spacing on mobile */
+        padding: 50px 20px;
     }
 `;
 
-// Individual NavItem with active styling, glow effect, and hover effects
+// Nav item with glow effect and active state
 const NavItem = styled.li`
     text-align: center;
 
@@ -81,10 +91,12 @@ const NavItem = styled.li`
         font-size: 1.2rem;
         font-weight: bold;
         position: relative;
-        transition: color 0.3s ease;
+        transition: color 0.3s ease, transform 0.3s ease;
 
         &:hover {
             color: #ff4081;
+            animation: ${neonGlow} 1.5s infinite alternate;
+            transform: scale(1.1);
         }
 
         &:hover::after {
@@ -102,62 +114,61 @@ const NavItem = styled.li`
     &.active a {
         color: #ff4081;
         font-weight: bold;
+        text-shadow: 0 0 5px #ff4081, 0 0 10px #ff4081;
     }
 `;
 
-// Hamburger icon for mobile screens
+// Hamburger icon for mobile screens with glow effect
 const HamburgerIcon = styled(IconButton)`
     position: fixed;
     top: 20px;
     left: 20px;
     color: #ff4081;
     z-index: 1500;
+    box-shadow: 0px 0px 5px #ff4081, 0px 0px 15px #ff4081;
 `;
 
+// Main content with margin adjustment for open mobile nav
 const MainContent = styled.div<{ isOpen: boolean }>`
-    padding-top: 60px; /* Space for the fixed navbar */
+    padding-top: 60px;
     margin-left: ${({ isOpen }) => (isOpen ? '75%' : '0')};
     transition: margin-left 0.5s ease;
 
     @media screen and (max-width: 750px) {
-        margin-left: 0; /* Reset for mobile */
+        margin-left: 0;
     }
 `;
 
 const NavBar = () => {
-    const [isOpen, setIsOpen] = useState(false); // State to toggle menu visibility
+    const [isOpen, setIsOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 750);
-    const location = useLocation(); // Track current location for active state
+    const location = useLocation();
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
 
     useEffect(() => {
-        // Handler to update `isMobile` state on window resize
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 750);
             if (window.innerWidth > 750) {
-                setIsOpen(false); // Close menu on larger screens
+                setIsOpen(false);
             }
         };
 
         window.addEventListener('resize', handleResize);
 
-        // Cleanup event listener on component unmount
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     return (
         <>
-            {/* Conditionally render Hamburger icon for mobile view */}
             {isMobile && (
                 <HamburgerIcon onClick={toggleMenu}>
                     {isOpen ? <CloseIcon /> : <MenuIcon />}
                 </HamburgerIcon>
             )}
 
-            {/* Navbar container */}
             <NavbarContainer isOpen={isOpen}>
                 <NavList>
                     <NavItem className={location.pathname === '/' ? 'active' : ''}>
@@ -184,7 +195,6 @@ const NavBar = () => {
                 </NavList>
             </NavbarContainer>
 
-            {/* Main content with padding for navbar */}
             <MainContent isOpen={isOpen}>
                 {/* Place the rest of your application components here */}
             </MainContent>

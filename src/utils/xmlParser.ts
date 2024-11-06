@@ -67,14 +67,42 @@ const hiraganaToRomaji: { [key: string]: string } = {
     ぎゃ: "gya", ぎゅ: "gyu", ぎょ: "gyo",
     じゃ: "ja", じゅ: "ju", じょ: "jo",
     びゃ: "bya", びゅ: "byu", びょ: "byo",
-    ぴゃ: "pya", ぴゅ: "pyu", ぴょ: "pyo"
-};
-function convertToRomaji(hiragana: string): string {
-    const hiraganaChars = hiragana.match(/(きゃ|きゅ|きょ|しゃ|しゅ|しょ|ちゃ|ちゅ|ちょ|にゃ|にゅ|にょ|ひゃ|ひゅ|ひょ|みゃ|みゅ|みょ|りゃ|りゅ|りょ|ぎゃ|ぎゅ|ぎょ|じゃ|じゅ|じょ|びゃ|びゅ|びょ|ぴゃ|ぴゅ|ぴょ|[あ-ん])/g);
-    if (!hiraganaChars) return "";
+    ぴゃ: "pya", ぴゅ: "pyu", ぴょ: "pyo",
 
-    return hiraganaChars.map(char => hiraganaToRomaji[char] || char).join("");
+    ア: "a", イ: "i", ウ: "u", エ: "e", オ: "o",
+    カ: "ka", キ: "ki", ク: "ku", ケ: "ke", コ: "ko",
+    サ: "sa", シ: "shi", ス: "su", セ: "se", ソ: "so",
+    タ: "ta", チ: "chi", ツ: "tsu", テ: "te", ト: "to",
+    ナ: "na", ニ: "ni", ヌ: "nu", ネ: "ne", ノ: "no",
+    ハ: "ha", ヒ: "hi", フ: "fu", ヘ: "he", ホ: "ho",
+    マ: "ma", ミ: "mi", ム: "mu", メ: "me", モ: "mo",
+    ヤ: "ya", ユ: "yu", ヨ: "yo",
+    ラ: "ra", リ: "ri", ル: "ru", レ: "re", ロ: "ro",
+    ワ: "wa", ヲ: "wo", ン: "n",
+    ガ: "ga", ギ: "gi", グ: "gu", ゲ: "ge", ゴ: "go",
+    ザ: "za", ジ: "ji", ズ: "zu", ゼ: "ze", ゾ: "zo",
+    ダ: "da", ヂ: "ji", ヅ: "zu", デ: "de", ド: "do",
+    バ: "ba", ビ: "bi", ブ: "bu", ベ: "be", ボ: "bo",
+    パ: "pa", ピ: "pi", プ: "pu", ペ: "pe", ポ: "po",
+    キャ: "kya", キュ: "kyu", キョ: "kyo",
+    シャ: "sha", シュ: "shu", ショ: "sho",
+    チャ: "cha", チュ: "chu", チョ: "cho",
+    ニャ: "nya", ニュ: "nyu", ニョ: "nyo",
+    ヒャ: "hya", ヒュ: "hyu", ヒョ: "hyo",
+    ミャ: "mya", ミュ: "myu", ミョ: "myo",
+    リャ: "rya", リュ: "ryu", リョ: "ryo",
+    ギャ: "gya", ギュ: "gyu", ギョ: "gyo",
+    ジャ: "ja", ジュ: "ju", ジョ: "jo",
+    ビャ: "bya", ビュ: "byu", ビョ: "byo",
+    ピャ: "pya", ピュ: "pyu", ピョ: "pyo"
+};
+function convertToRomaji(kana: string): string {
+    const kanaChars = kana.match(/(きゃ|きゅ|きょ|しゃ|しゅ|しょ|ちゃ|ちゅ|ちょ|にゃ|にゅ|にょ|ひゃ|ひゅ|ひょ|みゃ|みゅ|みょ|りゃ|りゅ|りょ|ぎゃ|ぎゅ|ぎょ|じゃ|じゅ|じょ|びゃ|びゅ|びょ|ぴゃ|ぴゅ|ぴょ|キャ|キュ|キョ|シャ|シュ|ショ|チャ|チュ|チョ|ニャ|ニュ|ニョ|ヒャ|ヒュ|ヒョ|ミャ|ミュ|ミョ|リャ|リュ|リョ|ギャ|ギュ|ギョ|ジャ|ジュ|ジョ|ビャ|ビュ|ビョ|ピャ|ピュ|ピョ|[あ-んア-ン])/g);
+    if (!kanaChars) return "";
+
+    return kanaChars.map(char => hiraganaToRomaji[char] || char).join("");
 }
+
 
 // Search function to find an exact word match in the vocabulary data
 export async function searchWord(word: string): Promise<VocabularyEntry[]> {
